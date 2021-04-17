@@ -1,0 +1,20 @@
+{
+  "comedies": {
+    "title": "Comedies",
+    "plays": [
+      {
+        "title": "All’s Well That Ends Well",
+        "id": "alls-well"
+      }
+    ]
+  },
+  "tragedies": {
+    "title": "Tragedies",
+    "plays": [
+      {
+        "title": "Antony and Cleopatra",
+        "id": "a-and-c"
+      }
+    ]
+  }
+}
