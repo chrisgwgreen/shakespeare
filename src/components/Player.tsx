@@ -81,7 +81,8 @@ export const Player = (props: Props) => {
             width: '200',
             playerVars: {
               controls: 0,
-              autoplay: 0
+              autoplay: 0,
+              playsinline: 1
             }
           }}
           onReady={handleReady}
