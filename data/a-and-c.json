@@ -1,0 +1,31 @@
+{
+  "title": "Antony and Cleopatra",
+  "xml": "a_and_c",
+  "youtube": "a6k7-zd_byo",
+  "keyframes": [
+    {
+      "title": "Dramatis Personae",
+      "time": "00:00:00"
+    },
+    {
+      "title": "Act I",
+      "time": "00:04:34​"
+    },
+    {
+      "title": "Act II",
+      "time": "00:34:406"
+    },
+    {
+      "title": "Act III",
+      "time": "01:15:57​"
+    },
+    {
+      "title": "Act IV",
+      "time": "02:00:20​"
+    },
+    {
+      "title": "Act V",
+      "time": "02:38:10​"
+    }
+  ]
+}

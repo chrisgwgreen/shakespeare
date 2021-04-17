@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/shakespeare/static/css/main.226d7daf.chunk.css",
+    "main.js": "/shakespeare/static/js/main.109530c6.chunk.js",
+    "main.js.map": "/shakespeare/static/js/main.109530c6.chunk.js.map",
+    "runtime-main.js": "/shakespeare/static/js/runtime-main.af50b713.js",
+    "runtime-main.js.map": "/shakespeare/static/js/runtime-main.af50b713.js.map",
+    "static/js/2.3863450d.chunk.js": "/shakespeare/static/js/2.3863450d.chunk.js",
+    "static/js/2.3863450d.chunk.js.map": "/shakespeare/static/js/2.3863450d.chunk.js.map",
+    "index.html": "/shakespeare/index.html",
+    "static/css/main.226d7daf.chunk.css.map": "/shakespeare/static/css/main.226d7daf.chunk.css.map",
+    "static/js/2.3863450d.chunk.js.LICENSE.txt": "/shakespeare/static/js/2.3863450d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.af50b713.js",
+    "static/js/2.3863450d.chunk.js",
+    "static/css/main.226d7daf.chunk.css",
+    "static/js/main.109530c6.chunk.js"
+  ]
+}

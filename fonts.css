@@ -1,0 +1,5 @@
+@font-face {
+  font-family: bardolatry;
+  src: url(./fonts/bardolatry.woff) format('woff2'),
+    url(./fonts/bardolatry.woff2) format('woff');
+}
