@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { SketchPicker, ColorResult } from 'react-color'
 import { Icon } from 'components'
-import { getRandomColor, getSafeName } from 'utils'
+import { getRandomColor, getSafeName, fadeInAnimation } from 'utils'
 
 interface Props {
   name: string
@@ -21,6 +21,8 @@ const PersonaWrapper = styled.div`
 const SketchPickerWrapper = styled.div`
   position: relative;
   padding: 2rem;
+  opacity: 0;
+  animation: ${fadeInAnimation} forwards 0.4s;
 `
 
 const PersonaTitleWrapper = styled.div`

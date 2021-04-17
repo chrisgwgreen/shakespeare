@@ -4,7 +4,6 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { NodeProps, PlayContentProps } from 'types'
 import { Play, Player, Loading } from 'components'
-
 import { xmlParser } from 'utils'
 
 interface Props {
@@ -14,11 +13,21 @@ interface Props {
 /*
  * Styled Components
  */
-const PlayViewerWrPlayViewerer = styled.div`
+const PlayViewerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+`
+
+const BackgroundImage = styled.img`
+  width: 100%;
+  position: fixed;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
 `
 
 /*
@@ -27,9 +36,15 @@ const PlayViewerWrPlayViewerer = styled.div`
 export const PlayViewer = () => {
   const { playId } = useParams<Props>()
 
+  /*
+   * State
+   */
   const [play, setPlay] = useState<NodeProps>()
   const [playContent, setPlayContent] = useState<PlayContentProps>()
 
+  /*
+   * React Hooks
+   */
   useEffect(() => {
     fetch(`${process.env.PUBLIC_URL}/data/${playId}.json`, {
       headers: {
@@ -63,12 +78,16 @@ export const PlayViewer = () => {
   if (!play.childNodes) return <>ERROR</>
 
   return (
-    <PlayViewerWrPlayViewerer>
+    <PlayViewerWrapper>
+      <BackgroundImage
+        src="https://upload.wikimedia.org/wikipedia/commons/3/36/Shakespeare_Droeshout_1623.jpg"
+        alt=""
+      />
       <Play
         nodeName={play.childNodes[0].nodeName}
         childNodes={play.childNodes[0].childNodes}
       />
       {playContent && <Player youtubeId={playContent?.youtube} />}
-    </PlayViewerWrPlayViewerer>
+    </PlayViewerWrapper>
   )
 }

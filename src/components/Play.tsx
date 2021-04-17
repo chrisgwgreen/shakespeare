@@ -46,14 +46,12 @@ export const Play = (props: NodeProps) => {
             case 'title':
               return (
                 text && (
-                  <>
+                  <TitleWrapper key={`play-title-${index}`}>
                     <Helmet>
                       <title>{text}</title>
                     </Helmet>
-                    <TitleWrapper key={`play-title-${index}`}>
-                      <Title text={text} size="large" />
-                    </TitleWrapper>
-                  </>
+                    <Title text={text} size="large" />
+                  </TitleWrapper>
                 )
               )
 

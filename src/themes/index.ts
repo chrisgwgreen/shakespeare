@@ -40,7 +40,7 @@ export const Theme = {
 
   // Font
   headerFont: 'bardolatry',
-  copyFont: 'latolight',
+  copyFont: 'Antonio',
 
   // Main Colors
   color: '#212121',

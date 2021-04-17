@@ -24,6 +24,10 @@ const Partition = styled.span`
   padding: 0.75rem 1rem;
 `
 
+const ShakespeareImage = styled.img`
+  width: 100%;
+`
+
 const MenuLinkWrapper = styled.div<{ isActive: boolean }>((props) => {
   const {
     isActive,
@@ -103,6 +107,12 @@ export const Menu = () => {
       <Helmet>
         <title>Menu</title>
       </Helmet>
+
+      <ShakespeareImage
+        src="https://upload.wikimedia.org/wikipedia/commons/3/36/Shakespeare_Droeshout_1623.jpg"
+        alt=""
+      />
+
       {menu}
     </>
   )

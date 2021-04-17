@@ -32,12 +32,15 @@ const TitleWrapper = styled.span<{ size: TitleSize; color?: string }>(
       ${size === 'medium' &&
       css`
         font-size: 1.5rem;
+        margin-bottom: 1rem;
       `}
       
       ${size === 'small' &&
       css`
         font-size: 1.2rem;
+        margin-bottom: 0.5rem;
       `}
+      
       ${size === 'extra-small' &&
       css`
         font-size: 1rem;

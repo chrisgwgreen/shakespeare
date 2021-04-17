@@ -11,6 +11,11 @@ const SpeechWrapper = styled.div`
   margin-top: 2rem;
 `
 
+const StageDirWrapper = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`
+
 /*
  * Component
  */
@@ -57,11 +62,9 @@ export const Speech = (props: NodeProps) => {
             case 'stagedir':
               return (
                 text && (
-                  <Title
-                    key={`speech-stagedir-${index}`}
-                    text={text}
-                    size="extra-small"
-                  />
+                  <StageDirWrapper key={`speech-stagedir-${index}`}>
+                    <Title text={text} size="extra-small" />
+                  </StageDirWrapper>
                 )
               )
 

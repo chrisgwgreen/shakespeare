@@ -10,6 +10,10 @@ const SceneWrapper = styled.div`
   margin-top: 2rem;
 `
 
+const StageDirWrapper = styled.div`
+  margin-top: 1rem;
+`
+
 /*
  * Component
  */
@@ -33,11 +37,9 @@ export const Scene = (props: NodeProps) => {
             case 'stagedir':
               return (
                 text && (
-                  <Title
-                    key={`scene-stagedir-${index}`}
-                    text={text}
-                    size="extra-small"
-                  />
+                  <StageDirWrapper key={`scene-stagedir-${index}`}>
+                    <Title text={text} size="extra-small" />
+                  </StageDirWrapper>
                 )
               )
 
