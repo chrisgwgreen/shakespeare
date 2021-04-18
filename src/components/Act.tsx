@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components/macro'
 import { NodeProps } from 'types'
 import { Title, Scene } from 'components'
 
+interface Props extends NodeProps {
+  onUpdatePlayer: (updateId: string) => void
+}
+
 /*
  * Styled Components
  */
@@ -18,11 +22,15 @@ const ActWrapper = styled.div((props) => {
   `
 })
 
+const ActTitleWrapper = styled.div`
+  cursor: pointer;
+`
+
 /*
  * Component
  */
-export const Act = (props: NodeProps) => {
-  const { childNodes } = props
+export const Act = (props: Props) => {
+  const { childNodes, onUpdatePlayer } = props
 
   return (
     <ActWrapper>
@@ -30,15 +38,20 @@ export const Act = (props: NodeProps) => {
         childNodes.map((child, index) => {
           const { nodeName, childNodes, text } = child
 
+          const handleUpdatePlayer = () => {
+            text && onUpdatePlayer(text)
+          }
+
           switch (nodeName) {
             case 'title':
               return (
                 text && (
-                  <Title
+                  <ActTitleWrapper
                     key={`act-title-${index}`}
-                    text={text}
-                    size="medium"
-                  />
+                    onClick={handleUpdatePlayer}
+                  >
+                    <Title text={text} size="medium" />
+                  </ActTitleWrapper>
                 )
               )
 

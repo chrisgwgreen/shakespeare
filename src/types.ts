@@ -6,7 +6,7 @@ export interface NodeProps {
   childNodes?: NodeProps[]
 }
 
-interface Keyframe {
+export interface Keyframe {
   title: string
   time: string
 }

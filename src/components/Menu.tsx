@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components/macro'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { StyledLink } from 'components'
 
 interface MenuProps {
@@ -105,7 +105,7 @@ export const Menu = () => {
   return (
     <>
       <Helmet>
-        <title>Menu</title>
+        <title>Plays</title>
       </Helmet>
 
       <ShakespeareImage

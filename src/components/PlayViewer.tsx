@@ -20,14 +20,15 @@ const PlayViewerWrapper = styled.div`
   text-align: center;
 `
 
-const BackgroundImage = styled.img`
+const BackgroundImage = styled.div`
   width: 100%;
+  height: 100%;
   position: fixed;
   z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   opacity: 0.1;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/36/Shakespeare_Droeshout_1623.jpg');
+  background-size: cover;
+  background-position: center;
 `
 
 /*
@@ -74,20 +75,31 @@ export const PlayViewer = () => {
     }
   }, [playContent])
 
+  /*
+   * Handle Events
+   */
+
+  const handleUpdatePlayer = (updateId: string) => {
+    console.log('updateId >>', updateId)
+  }
+
   if (!play) return <Loading />
   if (!play.childNodes) return <>ERROR</>
 
   return (
     <PlayViewerWrapper>
-      <BackgroundImage
-        src="https://upload.wikimedia.org/wikipedia/commons/3/36/Shakespeare_Droeshout_1623.jpg"
-        alt=""
-      />
+      <BackgroundImage />
       <Play
         nodeName={play.childNodes[0].nodeName}
         childNodes={play.childNodes[0].childNodes}
+        onUpdatePlayer={handleUpdatePlayer}
       />
-      {playContent && <Player youtubeId={playContent?.youtube} />}
+      {playContent && (
+        <Player
+          youtubeId={playContent?.youtube}
+          keyframes={playContent?.keyframes}
+        />
+      )}
     </PlayViewerWrapper>
   )
 }

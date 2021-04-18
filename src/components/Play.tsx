@@ -1,8 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { NodeProps } from 'types'
 import { Title, Personae, Text, Act } from 'components'
+
+interface Props extends NodeProps {
+  onUpdatePlayer: (updateId: string) => void
+}
 
 /*
  * Styled Components
@@ -13,6 +17,7 @@ const PlayWrapper = styled.div`
   align-items: center;
   max-width: 500px;
   margin-top: 80px;
+  margin-bottom: 250px;
 `
 
 const TitleWrapper = styled.div((props) => {
@@ -33,8 +38,8 @@ const TitleWrapper = styled.div((props) => {
 /*
  * Component
  */
-export const Play = (props: NodeProps) => {
-  const { childNodes } = props
+export const Play = (props: Props) => {
+  const { childNodes, onUpdatePlayer } = props
 
   return (
     <PlayWrapper>
@@ -77,6 +82,7 @@ export const Play = (props: NodeProps) => {
                   key={`play-act-${index}`}
                   nodeName={nodeName}
                   childNodes={childNodes}
+                  onUpdatePlayer={onUpdatePlayer}
                 />
               )
             default:

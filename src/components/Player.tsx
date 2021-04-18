@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import styled, { css } from 'styled-components/macro'
 import YouTube from 'react-youtube'
 import { YouTubePlayer } from 'youtube-player/dist/types'
+import { Keyframe } from 'types'
 import { Icon } from 'components'
 
 interface Props {
   youtubeId: string
+  keyframes: Keyframe[]
 }
 
 /*
@@ -38,7 +40,9 @@ const YoutubeWrapper = styled.div`
  * Component
  */
 export const Player = (props: Props) => {
-  const { youtubeId } = props
+  const { youtubeId, keyframes } = props
+
+  console.log({ keyframes })
 
   /*
    * State
