@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, createRef } from 'react'
 import styled from 'styled-components/macro'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
@@ -26,7 +26,8 @@ const BackgroundImage = styled.div`
   position: fixed;
   z-index: -1;
   opacity: 0.1;
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/3/36/Shakespeare_Droeshout_1623.jpg');
+  background-image: url(${process.env.PUBLIC_URL}/shakespeare.jpg);
+
   background-size: cover;
   background-position: center;
 `
@@ -38,10 +39,11 @@ export const PlayViewer = () => {
   const { playId } = useParams<Props>()
 
   /*
-   * State
+   * State/Ref
    */
   const [play, setPlay] = useState<NodeProps>()
   const [playContent, setPlayContent] = useState<PlayContentProps>()
+  const playerRef = createRef<any>()
 
   /*
    * React Hooks
@@ -78,10 +80,8 @@ export const PlayViewer = () => {
   /*
    * Handle Events
    */
-
-  const handleUpdatePlayer = (updateId: string) => {
-    console.log('updateId >>', updateId)
-  }
+  const handleUpdatePlayer = (updateId: string) =>
+    playerRef.current.updatePlayer(updateId)
 
   if (!play) return <Loading />
   if (!play.childNodes) return <>ERROR</>
@@ -97,7 +97,8 @@ export const PlayViewer = () => {
       {playContent && (
         <Player
           youtubeId={playContent?.youtube}
-          keyframes={playContent?.keyframes}
+          actKeyframes={playContent?.actKeyframes}
+          ref={playerRef}
         />
       )}
     </PlayViewerWrapper>

@@ -1,0 +1,14 @@
+{
+  "xml": "hamlet",
+  "actKeyframes": [
+    { "title": "Dramatis Personae", "time": "00:00:00" },
+    { "title": "act i", "time": "00:01:57" },
+    { "title": "act ii", "time": "00:49:48" },
+    { "title": "act iii", "time": "01:31:43" },
+    { "title": "act iv", "time": "02:23:21" },
+    { "title": "act v", "time": "03:01:53" },
+    { "title": "act vi", "time": "b" }
+  ],
+  "title": "The Tragedy of Hamlet, Prince of Denmark",
+  "youtube": "6_Y-tYrGBDc"
+}

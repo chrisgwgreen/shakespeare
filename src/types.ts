@@ -15,5 +15,9 @@ export interface PlayContentProps {
   title: string
   xml: string
   youtube: string
-  keyframes: Keyframe[]
+  actKeyframes: Keyframe[]
+}
+
+export interface PlayerRefProps {
+  updatePlayer: (updateId: string) => void
 }

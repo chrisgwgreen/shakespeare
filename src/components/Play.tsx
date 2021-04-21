@@ -1,8 +1,9 @@
-import React from 'react'
-import styled, { css } from 'styled-components/macro'
+import React, { Fragment } from 'react'
+import styled from 'styled-components/macro'
 import { Helmet } from 'react-helmet-async'
+
 import { NodeProps } from 'types'
-import { Title, Personae, Text, Act } from 'components'
+import { Personae, Text, Act, PlayHeader } from 'components'
 
 interface Props extends NodeProps {
   onUpdatePlayer: (updateId: string) => void
@@ -20,21 +21,6 @@ const PlayWrapper = styled.div`
   margin-bottom: 250px;
 `
 
-const TitleWrapper = styled.div((props) => {
-  const {
-    theme: { background, boxShadow }
-  } = props
-
-  return css`
-    position: fixed;
-    width: 100%;
-    top: 0;
-    padding: 1rem;
-    background: ${background};
-    box-shadow: ${boxShadow};
-  `
-})
-
 /*
  * Component
  */
@@ -51,12 +37,12 @@ export const Play = (props: Props) => {
             case 'title':
               return (
                 text && (
-                  <TitleWrapper key={`play-title-${index}`}>
+                  <Fragment key={`play-title-${index}`}>
                     <Helmet>
                       <title>{text}</title>
                     </Helmet>
-                    <Title text={text} size="large" />
-                  </TitleWrapper>
+                    <PlayHeader title={text} />
+                  </Fragment>
                 )
               )
 

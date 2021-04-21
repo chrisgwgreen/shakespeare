@@ -4,7 +4,59 @@
     "plays": [
       {
         "title": "All’s Well That Ends Well",
-        "id": "alls-well"
+        "id": "all-well"
+      },
+      {
+        "title": "As You Like It",
+        "id": "as-you"
+      },
+      {
+        "title": "The Comedy of Errors",
+        "id": "com-err"
+      },
+      {
+        "title": "Love's Labour's Lost",
+        "id": "lll"
+      },
+      {
+        "title": "Measure for Measure",
+        "id": "m-for-m"
+      },
+      {
+        "title": "The Merchant of Venice",
+        "id": "merchant"
+      },
+      {
+        "title": "The Merry Wives of Windsor",
+        "id": "m-wives"
+      },
+      {
+        "title": "A Midsummer Night's Dream",
+        "id": "dream"
+      },
+      {
+        "title": "Much Ado About Nothing",
+        "id": "much-ado"
+      },
+      {
+        "title": "The Taming of the Shrew",
+        "id": "taming"
+      },
+      {
+        "title": "The Tempest",
+        "id": "tempest"
+      },
+      {
+        "title": "Twelfth Night",
+        "id": "t-night"
+      },
+      {
+        "title": "The Two Gentlemen of Verona",
+        "id": "two-gent"
+      },
+      {
+        "title": "The Winter's Tale",
+        "id": "win-tale"
       }
     ]
   },
@@ -14,6 +66,104 @@
       {
         "title": "Antony and Cleopatra",
         "id": "a-and-c"
+      },
+      {
+        "title": "Coriolanus",
+        "id": "coriolan"
+      },
+      {
+        "title": "Cymbeline",
+        "id": "cymbelin"
+      },
+      {
+        "title": "Hamlet",
+        "id": "hamlet"
+      },
+      {
+        "title": "Julius Caesar",
+        "id": "j-caesar"
+      },
+      {
+        "title": "King Lear",
+        "id": "lear"
+      },
+      {
+        "title": "Macbeth",
+        "id": "macbeth"
+      },
+      {
+        "title": "Othello",
+        "id": "othello"
+      },
+      {
+        "title": "Romeo and Juliet",
+        "id": "r-and-j"
+      },
+      {
+        "title": "Timon of Athens",
+        "id": "timon"
+      },
+      {
+        "title": "Titus Andronicus",
+        "id": "titus"
+      },
+      {
+        "title": "Troilus and Cressida ",
+        "id": "troilus"
+      }
+    ]
+  },
+  "histories": {
+    "title": "Histories",
+    "plays": [
+      {
+        "title": "Henry IV Part I",
+        "id": "hen-iv-1"
+      },
+      {
+        "title": "Henry IV Part II",
+        "id": "hen-iv-2"
+      },
+      {
+        "title": "Henry V",
+        "id": "hen-v"
+      },
+      {
+        "title": "Henry VI Part I",
+        "id": "hen-vi-1"
+      },
+      {
+        "title": "Henry VI Part II",
+        "id": "hen-vi-2"
+      },
+      {
+        "title": "Henry VI Part III",
+        "id": "hen-vi-3"
+      },
+      {
+        "title": "Henry VIII",
+        "id": "hen-viii"
+      },
+      {
+        "title": "King John",
+        "id": "john"
+      },
+      {
+        "title": "Richard II",
+        "id": "rich-ii"
+      },
+      {
+        "title": "Richard III",
+        "id": "rich-iii"
+      }
+    ]
+  },
+  "tragicomedy": {
+    "title": "Tragicomedy",
+    "plays": [
+      {
+        "title": "Pericles, Prince of Tyre",
+        "id": "pericles"
       }
     ]
   }

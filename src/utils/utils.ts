@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const getRandomColor = () => {
   const letters = '0123456789ABCDEF'
   let color = '#'
@@ -14,3 +16,9 @@ export const getSafeName = (name: string): string =>
     .split(' ')[0]
     .replace(/[\p{P}$+<=>^`|~]/gu, '')
     .toLowerCase()
+
+export const stringToSeconds = (timeString: string) =>
+  moment(timeString, 'HH:mm:ss').diff(
+    moment('00:00:00', 'HH:mm:ss'),
+    'seconds'
+  )

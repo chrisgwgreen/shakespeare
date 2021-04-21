@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components/macro'
 import { Helmet } from 'react-helmet-async'
-import { StyledLink } from 'components'
+import { StyledLink, Title, ParallaxHeader } from 'components'
 
 interface MenuProps {
   title: string
@@ -16,6 +16,11 @@ interface Plays {
 /*
  * Styled Components
  */
+const PageLayout = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
 const Partition = styled.span`
   opacity: 0.5;
   text-transform: uppercase;
@@ -24,8 +29,9 @@ const Partition = styled.span`
   padding: 0.75rem 1rem;
 `
 
-const ShakespeareImage = styled.img`
-  width: 100%;
+const MenuWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `
 
 const MenuLinkWrapper = styled.div<{ isActive: boolean }>((props) => {
@@ -54,6 +60,19 @@ const MenuLinkWrapper = styled.div<{ isActive: boolean }>((props) => {
     `}
   `
 })
+
+const MenuHeader = styled.div`
+  position: relative;
+`
+
+const MenuHeaderTorn = styled.div`
+  width: 100%;
+  height: 69px;
+  position: absolute;
+  bottom: 0;
+  background-image: url('${process.env.PUBLIC_URL}/edge.png');
+  background-repeat-y: no-repeat;
+`
 
 /*
  * Component
@@ -108,12 +127,11 @@ export const Menu = () => {
         <title>Plays</title>
       </Helmet>
 
-      <ShakespeareImage
-        src="https://upload.wikimedia.org/wikipedia/commons/3/36/Shakespeare_Droeshout_1623.jpg"
-        alt=""
-      />
+      <ParallaxHeader />
 
-      {menu}
+      <PageLayout>
+        <MenuWrapper>{menu}</MenuWrapper>
+      </PageLayout>
     </>
   )
 }

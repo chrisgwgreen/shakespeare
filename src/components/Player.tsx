@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  Ref,
+  useImperativeHandle
+} from 'react'
 import styled, { css } from 'styled-components/macro'
 import YouTube from 'react-youtube'
 import { YouTubePlayer } from 'youtube-player/dist/types'
-import { Keyframe } from 'types'
-import { Icon } from 'components'
+import { Keyframe, PlayerRefProps } from 'types'
+import { stringToSeconds } from 'utils'
+import { Icon, Button, Title } from 'components'
 
 interface Props {
   youtubeId: string
-  keyframes: Keyframe[]
+  actKeyframes: Keyframe[]
 }
 
 /*
@@ -21,7 +28,7 @@ const PlayerWrapper = styled.div((props) => {
   return css`
     position: fixed;
     bottom: 0;
-    width: 100%;
+    left: 0;
     height: 200px;
     background: #fff;
     box-shadow: ${boxShadow};
@@ -29,7 +36,17 @@ const PlayerWrapper = styled.div((props) => {
   `
 })
 
-const ControlWrapper = styled.div``
+const ControlWrapper = styled.div`
+  display: flex;
+  /* vertical-align: middle; */
+`
+
+const DetailsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+`
+
 const YoutubeWrapper = styled.div`
   width: 200px;
   height: 200px;
@@ -39,40 +56,86 @@ const YoutubeWrapper = styled.div`
 /*
  * Component
  */
-export const Player = (props: Props) => {
-  const { youtubeId, keyframes } = props
-
-  console.log({ keyframes })
+const PlayerRef = (props: Props, ref: Ref<PlayerRefProps>) => {
+  const { youtubeId, actKeyframes } = props
 
   /*
    * State
    */
   const [player, setPlayer] = useState<YouTubePlayer>()
 
+  useImperativeHandle(ref, () => ({
+    updatePlayer: (updateId: string) => {
+      const keyframe = actKeyframes.find((actKeyframe) => {
+        const { title } = actKeyframe
+
+        return title.toLowerCase() === updateId.toLowerCase()
+      })
+
+      if (keyframe) {
+        player?.seekTo(stringToSeconds(keyframe.time), true)
+
+        console.log('Update Player >', stringToSeconds(keyframe.time))
+      }
+    }
+  }))
+
+  /*
+   * useEffect
+   */
+  useEffect(() => {
+    const handleSaveInterval = () => {
+      console.log('handleSaveInterval')
+    }
+
+    const interval = setInterval(handleSaveInterval, 120000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   /*
    * Handle Events
    */
   const handleReady = (event: { target: YouTubePlayer }) => {
     const { target } = event
+
     setPlayer(target)
+  }
+
+  const handleStepBackward = () => {
+    console.log('handleStepBackward')
+  }
+
+  const handleStepForward = () => {
+    console.log('handleStepBackward')
+  }
+
+  const handleForward = () => {
+    console.log('handleForward')
+  }
+
+  const handleBack = () => {
+    console.log('handleBack')
   }
 
   const handlePlay = () => {
     player?.playVideo()
   }
 
+  const handlePlayerPlay = () => {
+    console.log('handlePlayerPlay')
+  }
+
+  const handlePlayerPause = () => {
+    console.log('handlePlayerPause')
+  }
+
   const handleGetDetails = () => {
     console.log(player)
     console.log(player?.getCurrentTime())
     console.log(player?.getDuration())
-
-    // Current Time = 557.648687
-    // Duration = 11049
-    //19.81
-
-    // Total Page = 130525
-    // ScrollY = 4312
-    // 30
   }
 
   return (
@@ -90,14 +153,35 @@ export const Player = (props: Props) => {
             }
           }}
           onReady={handleReady}
+          onPlay={handlePlayerPlay}
+          onPause={handlePlayerPause}
         />
       </YoutubeWrapper>
-      <ControlWrapper>
-        <button onClick={handlePlay}>
-          <Icon icon="play" />
-        </button>
-        <button onClick={handleGetDetails}>Details</button>
-      </ControlWrapper>
+      <DetailsWrapper>
+        <Title text="Act i" size="small" />
+
+        <ControlWrapper>
+          <Button onClick={handleStepBackward}>
+            <Icon icon="step-backward" />
+          </Button>
+          <Button onClick={handleBack}>
+            <Icon icon="backward" size="2x" />
+          </Button>
+          <Button onClick={handlePlay}>
+            <Icon icon="play" size="2x" />
+          </Button>
+          <Button onClick={handleForward}>
+            <Icon icon="forward" size="2x" />
+          </Button>
+          <Button onClick={handleStepForward}>
+            <Icon icon="step-forward" />
+          </Button>
+        </ControlWrapper>
+
+        <Button onClick={handleGetDetails}>Details</Button>
+      </DetailsWrapper>
     </PlayerWrapper>
   )
 }
+
+export const Player = forwardRef(PlayerRef)

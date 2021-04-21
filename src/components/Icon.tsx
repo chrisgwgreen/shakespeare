@@ -16,7 +16,11 @@ import {
   faChevronLeft,
   faChevronRight,
   faFeatherAlt,
-  faPlay
+  faPlay,
+  faForward,
+  faBackward,
+  faStepForward,
+  faStepBackward
 } from '@fortawesome/free-solid-svg-icons'
 
 export type IconName =
@@ -28,6 +32,10 @@ export type IconName =
   | 'chevron-right'
   | 'feather-alt'
   | 'play'
+  | 'forward'
+  | 'backward'
+  | 'step-forward'
+  | 'step-backward'
 
 interface Props {
   icon?: IconName
@@ -47,7 +55,11 @@ library.add(
   faTimes,
   faBars,
   faFeatherAlt,
-  faPlay
+  faPlay,
+  faForward,
+  faBackward,
+  faStepForward,
+  faStepBackward
 )
 
 /*

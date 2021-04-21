@@ -30,7 +30,11 @@ export const Scene = (props: NodeProps) => {
             case 'title':
               return (
                 text && (
-                  <Text key={`scene-title-${index}`} text={text} />
+                  <Title
+                    key={`scene-title-${index}`}
+                    text={text}
+                    size="medium"
+                  />
                 )
               )
 

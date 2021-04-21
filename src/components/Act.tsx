@@ -50,7 +50,7 @@ export const Act = (props: Props) => {
                     key={`act-title-${index}`}
                     onClick={handleUpdatePlayer}
                   >
-                    <Title text={text} size="medium" />
+                    <Title text={text} size="large" />
                   </ActTitleWrapper>
                 )
               )
