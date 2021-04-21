@@ -7,7 +7,7 @@ import { Title } from 'components'
  */
 const MenuHeader = styled.div`
   position: relative;
-  height: 500px;
+  height: 200px;
   overflow: hidden;
 `
 
@@ -19,7 +19,7 @@ const TitleWrapper = styled.div`
 
 const ParallaxBackground = styled.img`
   width: 100%;
-  transform: translateY(-200px);
+  /* transform: translateY(-200px); */
 `
 
 const MenuHeaderTorn = styled.div`

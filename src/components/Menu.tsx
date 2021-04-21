@@ -21,17 +21,18 @@ const PageLayout = styled.div`
   height: 100%;
 `
 
-const Partition = styled.span`
-  opacity: 0.5;
-  text-transform: uppercase;
-  font-size: 0.8125rem;
-  display: block;
-  padding: 0.75rem 1rem;
-`
-
 const MenuWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+`
+
+const MenuColumn = styled.div`
+  min-width: 250px;
+`
+const TitleWrapper = styled.div`
+  margin: 1rem 0 0 1rem;
 `
 
 const MenuLinkWrapper = styled.div<{ isActive: boolean }>((props) => {
@@ -61,19 +62,6 @@ const MenuLinkWrapper = styled.div<{ isActive: boolean }>((props) => {
   `
 })
 
-const MenuHeader = styled.div`
-  position: relative;
-`
-
-const MenuHeaderTorn = styled.div`
-  width: 100%;
-  height: 69px;
-  position: absolute;
-  bottom: 0;
-  background-image: url('${process.env.PUBLIC_URL}/edge.png');
-  background-repeat-y: no-repeat;
-`
-
 /*
  * Component
  */
@@ -101,8 +89,11 @@ export const Menu = () => {
       const menuItem = menuContent[value] as MenuProps
 
       return (
-        <div key={`menu-${menuItem.title}`}>
-          <Partition>{menuItem.title}</Partition>
+        <MenuColumn key={`menu-${menuItem.title}`}>
+          <TitleWrapper>
+            <Title text={menuItem.title} />
+          </TitleWrapper>
+
           {menuItem.plays.map((play) => {
             const { id, title } = play
 
@@ -117,7 +108,7 @@ export const Menu = () => {
               </StyledLink>
             )
           })}
-        </div>
+        </MenuColumn>
       )
     })
 

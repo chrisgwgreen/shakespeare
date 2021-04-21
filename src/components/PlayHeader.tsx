@@ -47,6 +47,7 @@ export const PlayHeader = (props: Props) => {
 
   return (
     <TitleWrapper>
+      {/* <MenuHeaderTorn /> */}
       <HomeButtonWrapper to={`/`}>
         <Icon icon="feather-alt" />
       </HomeButtonWrapper>
