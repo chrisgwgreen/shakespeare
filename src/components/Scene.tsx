@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { NodeProps } from 'types'
-import { Speech, Text, Title } from 'components'
+import { Speech, Title } from 'components'
 
 /*
  * Styled Components

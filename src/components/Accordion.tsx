@@ -4,9 +4,7 @@ import { Icon } from 'components'
 import { easing } from 'utils'
 
 interface AccordionItem {
-  title?: string
-  titleRender?: () => ReactNode
-  isPaddedSides?: boolean
+  title: string
   render?: () => ReactNode
 }
 
@@ -26,6 +24,7 @@ const AccordionWrapper = styled.div((props) => {
     overflow: hidden;
     user-select: none;
     transform: translate3d(0, 0, 0);
+    width: 100%;
 
     Icon {
       fill: ${color};
@@ -33,10 +32,20 @@ const AccordionWrapper = styled.div((props) => {
   `
 })
 
-const AccordionTitle = styled.span`
-  margin: 1rem 0;
-  text-transform: uppercase;
-`
+const AccordionTitle = styled.span((props) => {
+  const {
+    theme: { headerFont }
+  } = props
+
+  return css`
+    margin: 2rem 0;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    font-family: ${headerFont};
+    font-size: 1rem;
+  `
+})
 
 const AccordionGroupWrapper = styled.div``
 
@@ -62,20 +71,22 @@ const AccordionHeaderWrapper = styled.div((props) => {
   `
 })
 
-const AccordionContentWrapper = styled.div<{
-  isPaddedSides: boolean
-}>((props) => {
-  const { isPaddedSides } = props
+const AccordionContentWrapper = styled.div((props) => {
+  const {
+    theme: { borderColor }
+  } = props
 
   return css`
-    padding: 1rem 0;
-
-    ${isPaddedSides &&
-    css`
-      padding: 1rem;
-    `}
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: ${borderColor} solid 1px;
   `
 })
+
+const IconWrapper = styled.div`
+  position: absolute;
+  right: 0;
+`
 
 /*
  * Component
@@ -83,10 +94,15 @@ const AccordionContentWrapper = styled.div<{
 export const Accordion = (props: Props) => {
   const { items } = props
 
+  /*
+   * State/Ref
+   */
   const [openSection, setOpenSection] = useState<number[]>([])
-
   const contentRef = useRef<HTMLElement[]>([])
 
+  /*
+   * Function
+   */
   const animate = (
     index: number,
     startHeight: number,
@@ -139,12 +155,7 @@ export const Accordion = (props: Props) => {
     <AccordionWrapper>
       {items &&
         items.map((item, index) => {
-          const {
-            title,
-            titleRender,
-            render,
-            isPaddedSides = false
-          } = item
+          const { title, render } = item
 
           const isOpen = openSection.includes(index)
 
@@ -171,13 +182,13 @@ export const Accordion = (props: Props) => {
           return (
             <AccordionGroupWrapper key={`accordion-item-${index}`}>
               <AccordionHeaderWrapper onClick={handleItemClick}>
-                {titleRender && titleRender()}
-                {!titleRender && (
-                  <AccordionTitle>{title}</AccordionTitle>
-                )}
-                <Icon
-                  icon={isOpen ? 'chevron-down' : 'chevron-right'}
-                />
+                <AccordionTitle>{title}</AccordionTitle>
+
+                <IconWrapper>
+                  <Icon
+                    icon={isOpen ? 'chevron-down' : 'chevron-right'}
+                  />
+                </IconWrapper>
               </AccordionHeaderWrapper>
 
               <AccordionExpandWrapper
@@ -190,7 +201,6 @@ export const Accordion = (props: Props) => {
                   ref={(ref) => {
                     contentRef.current[index] = ref as HTMLElement
                   }}
-                  isPaddedSides={isPaddedSides}
                 >
                   {render && render()}
                 </AccordionContentWrapper>

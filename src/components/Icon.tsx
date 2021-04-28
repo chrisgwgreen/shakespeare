@@ -20,7 +20,11 @@ import {
   faForward,
   faBackward,
   faStepForward,
-  faStepBackward
+  faStepBackward,
+  faPlus,
+  faMinus,
+  faPause,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons'
 
 export type IconName =
@@ -32,10 +36,14 @@ export type IconName =
   | 'chevron-right'
   | 'feather-alt'
   | 'play'
+  | 'pause'
   | 'forward'
   | 'backward'
   | 'step-forward'
   | 'step-backward'
+  | 'plus'
+  | 'minus'
+  | 'search'
 
 interface Props {
   icon?: IconName
@@ -56,10 +64,14 @@ library.add(
   faBars,
   faFeatherAlt,
   faPlay,
+  faPause,
   faForward,
   faBackward,
   faStepForward,
-  faStepBackward
+  faStepBackward,
+  faPlus,
+  faMinus,
+  faSearch
 )
 
 /*

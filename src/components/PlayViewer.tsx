@@ -2,7 +2,7 @@ import React, { useEffect, useState, createRef } from 'react'
 import styled from 'styled-components/macro'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { NodeProps, PlayContentProps } from 'types'
+import { NodeProps, PlayContentProps, PlayerRef } from 'types'
 import { Play, Player, Loading } from 'components'
 import { xmlParser } from 'utils'
 
@@ -43,7 +43,7 @@ export const PlayViewer = () => {
    */
   const [play, setPlay] = useState<NodeProps>()
   const [playContent, setPlayContent] = useState<PlayContentProps>()
-  const playerRef = createRef<any>()
+  const playerRef = createRef<PlayerRef>()
 
   /*
    * React Hooks
@@ -81,7 +81,7 @@ export const PlayViewer = () => {
    * Handle Events
    */
   const handleUpdatePlayer = (updateId: string) =>
-    playerRef.current.updatePlayer(updateId)
+    playerRef.current && playerRef.current.updatePlayer(updateId)
 
   if (!play) return <Loading />
   if (!play.childNodes) return <>ERROR</>

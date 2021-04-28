@@ -13,6 +13,7 @@ declare module 'styled-components' {
     background: string
     borderColor: string
     boxShadow: string
+    accentColor: string
 
     // Dimensions
     imageWidth: number
@@ -45,14 +46,14 @@ export const Theme = {
   // Main Colors
   color: '#212121',
   background: '#ffffff',
-  borderColor: '#9fcade',
+  borderColor: '#000',
+  accentColor: '#609ab8',
+  boxShadow: '0 0 0.5rem 0 rgba(0, 0, 0, 0.2)',
 
   // Dimensions
   imageWidth: 224,
   menuHeight: 60,
   menuWidth: 18.75,
-
-  boxShadow: '0 0 0.5rem 0 rgba(0, 0, 0, 0.2)',
 
   // Polygon
   Mesh: {

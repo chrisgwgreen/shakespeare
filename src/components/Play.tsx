@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import styled from 'styled-components/macro'
 import { Helmet } from 'react-helmet-async'
-
-import { NodeProps } from 'types'
-import { Personae, Text, Act, PlayHeader } from 'components'
+import { NodeProps, User } from 'types'
+import { Personae, Title, Act, PlayHeader } from 'components'
 
 interface Props extends NodeProps {
   onUpdatePlayer: (updateId: string) => void
@@ -21,11 +20,29 @@ const PlayWrapper = styled.div`
   margin-bottom: 250px;
 `
 
+const ScndescrWrapper = styled.div`
+  margin-top: 2rem;
+`
+
 /*
  * Component
  */
 export const Play = (props: Props) => {
   const { childNodes, onUpdatePlayer } = props
+
+  const [users, setUsers] = useState<User[]>([])
+
+  /*
+   * Handle Events
+   */
+
+  const handleUpdatePersona = (name: string, color: string) => {
+    const newUsers = [...users, { name, color }]
+
+    setUsers(newUsers)
+
+    console.log('>>>>', users)
+  }
 
   return (
     <PlayWrapper>
@@ -52,13 +69,17 @@ export const Play = (props: Props) => {
                   key={`play-personae-${index}`}
                   nodeName={nodeName}
                   childNodes={childNodes}
+                  onUpdatePersona={handleUpdatePersona}
+                  users={users}
                 />
               )
 
             case 'scndescr':
               return (
                 text && (
-                  <Text key={`play-scndescr-${index}`} text={text} />
+                  <ScndescrWrapper key={`play-scndescr-${index}`}>
+                    <Title text={text} size="extra-small" />
+                  </ScndescrWrapper>
                 )
               )
 

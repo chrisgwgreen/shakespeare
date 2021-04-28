@@ -6,6 +6,7 @@ import { getRandomColor, getSafeName, fadeInAnimation } from 'utils'
 
 interface Props {
   name: string
+  onUpdatePersona: (name: string, color: string) => void
 }
 
 /*
@@ -43,7 +44,7 @@ const ButtonWrapper = styled.button`
  * Component
  */
 export const Persona = (props: Props) => {
-  const { name } = props
+  const { name, onUpdatePersona } = props
 
   /*
    * State
@@ -64,9 +65,12 @@ export const Persona = (props: Props) => {
     if (!safeNameColor) {
       const randomColor = getRandomColor()
 
+      // TODO move this to "Play"
       localStorage.setItem(safeName, randomColor)
 
       setSafeNameColor(randomColor)
+
+      onUpdatePersona(name, randomColor)
     } else {
       setSafeNameColor(safeNameColor)
     }
@@ -100,6 +104,8 @@ export const Persona = (props: Props) => {
     const safeName = getSafeName(name)
 
     safeNameColor && localStorage.setItem(safeName, safeNameColor)
+
+    safeNameColor && onUpdatePersona(name, safeNameColor)
   }
 
   const style = {

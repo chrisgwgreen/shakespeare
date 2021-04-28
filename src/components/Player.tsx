@@ -2,15 +2,16 @@ import React, {
   useState,
   useEffect,
   forwardRef,
+  useRef,
   Ref,
   useImperativeHandle
 } from 'react'
 import styled, { css } from 'styled-components/macro'
 import YouTube from 'react-youtube'
 import { YouTubePlayer } from 'youtube-player/dist/types'
-import { Keyframe, PlayerRefProps } from 'types'
-import { stringToSeconds } from 'utils'
-import { Icon, Button, Title } from 'components'
+import { Keyframe, PlayerRef } from 'types'
+import { stringToSeconds, findString } from 'utils'
+import { Icon, Button, Title, Switch } from 'components'
 
 interface Props {
   youtubeId: string
@@ -38,13 +39,14 @@ const PlayerWrapper = styled.div((props) => {
 
 const ControlWrapper = styled.div`
   display: flex;
-  /* vertical-align: middle; */
+  justify-content: space-around;
 `
 
 const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  justify-content: space-around;
 `
 
 const YoutubeWrapper = styled.div`
@@ -56,13 +58,22 @@ const YoutubeWrapper = styled.div`
 /*
  * Component
  */
-const PlayerRef = (props: Props, ref: Ref<PlayerRefProps>) => {
+const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
   const { youtubeId, actKeyframes } = props
 
   /*
    * State
    */
   const [player, setPlayer] = useState<YouTubePlayer>()
+  const [isPlaying, setIsPlaying] = useState<boolean>(false)
+  const [isAutoscrolling, setIsAutoscrolling] = useState<boolean>(
+    false
+  )
+  const isScrolling = useRef<boolean>(false)
+  const scrollTop = useRef<number>(0)
+  const autoScrollRate = useRef<number>(0.5)
+
+  const [currentAct, setCurrentAct] = useState<string>()
 
   useImperativeHandle(ref, () => ({
     updatePlayer: (updateId: string) => {
@@ -81,19 +92,74 @@ const PlayerRef = (props: Props, ref: Ref<PlayerRefProps>) => {
   }))
 
   /*
-   * useEffect
+   * useEffect: Scroll to previous Y
+   */
+  useEffect(() => {
+    if (youtubeId) {
+      const scrollY = localStorage.getItem(`${youtubeId}-s`)
+
+      if (scrollY) window.scrollTo(0, parseFloat(scrollY))
+    }
+  }, [youtubeId])
+
+  useEffect(() => {
+    return () => {
+      isScrolling.current = false
+    }
+  }, [])
+
+  /*
+   * useEffect: Save audio and page position whilst playing...
    */
   useEffect(() => {
     const handleSaveInterval = () => {
-      console.log('handleSaveInterval')
+      if (isPlaying) {
+        localStorage.setItem(`${youtubeId}-s`, `${window.scrollY}`)
+        localStorage.setItem(
+          `${youtubeId}-t`,
+          `${player?.getCurrentTime()}`
+        )
+      }
     }
 
-    const interval = setInterval(handleSaveInterval, 120000)
+    const interval = setInterval(handleSaveInterval, 1000)
 
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [isPlaying])
+
+  useEffect(() => {
+    if (isPlaying) {
+      const seekTime = localStorage.getItem(`${youtubeId}-t`)
+
+      if (seekTime) player?.seekTo(parseFloat(seekTime), true)
+
+      const scrollY = localStorage.getItem(`${youtubeId}-s`)
+
+      if (scrollY) window.scrollTo(0, parseFloat(scrollY))
+    }
+  }, [isPlaying])
+
+  useEffect(() => {
+    if (isAutoscrolling && isPlaying) {
+      const autoScroll = () => {
+        window.requestAnimationFrame(() => {
+          if (isScrolling.current) {
+            if (document.scrollingElement) {
+              scrollTop.current += autoScrollRate.current
+
+              document.scrollingElement.scrollTop = scrollTop.current
+            }
+
+            autoScroll()
+          }
+        })
+      }
+
+      autoScroll()
+    }
+  }, [isAutoscrolling, isPlaying])
 
   /*
    * Handle Events
@@ -105,38 +171,54 @@ const PlayerRef = (props: Props, ref: Ref<PlayerRefProps>) => {
   }
 
   const handleStepBackward = () => {
+    findString('ACT I', false, false, true, true)
     console.log('handleStepBackward')
   }
 
   const handleStepForward = () => {
+    findString('ACT II', false, false, true, true)
     console.log('handleStepBackward')
   }
 
   const handleForward = () => {
-    console.log('handleForward')
+    player && player.seekTo(player.getCurrentTime() + 10, true)
   }
 
   const handleBack = () => {
-    console.log('handleBack')
+    player && player.seekTo(player.getCurrentTime() - 10, true)
   }
 
   const handlePlay = () => {
-    player?.playVideo()
+    if (!isPlaying) {
+      player?.playVideo()
+    } else {
+      player?.pauseVideo()
+    }
   }
 
   const handlePlayerPlay = () => {
-    console.log('handlePlayerPlay')
+    setIsPlaying(true)
   }
 
-  const handlePlayerPause = () => {
-    console.log('handlePlayerPause')
+  const handlePlayerPause = () => setIsPlaying(false)
+
+  const handleAutoscrollChange = (isChecked: boolean) => {
+    isScrolling.current = isChecked
+    setIsAutoscrolling(isChecked) // Triggers render
+
+    if (isChecked) {
+      // Set scroll top
+      if (document.scrollingElement) {
+        scrollTop.current = document.scrollingElement.scrollTop
+      }
+    }
   }
 
-  const handleGetDetails = () => {
-    console.log(player)
-    console.log(player?.getCurrentTime())
-    console.log(player?.getDuration())
-  }
+  const handleDecreaseAutoscrollSpeed = () =>
+    (autoScrollRate.current -= 0.1)
+
+  const handleIncreaseAutoscrollSpeed = () =>
+    (autoScrollRate.current += 0.1)
 
   return (
     <PlayerWrapper>
@@ -168,7 +250,7 @@ const PlayerRef = (props: Props, ref: Ref<PlayerRefProps>) => {
             <Icon icon="backward" size="2x" />
           </Button>
           <Button onClick={handlePlay}>
-            <Icon icon="play" size="2x" />
+            <Icon icon={isPlaying ? 'pause' : 'play'} size="2x" />
           </Button>
           <Button onClick={handleForward}>
             <Icon icon="forward" size="2x" />
@@ -177,11 +259,21 @@ const PlayerRef = (props: Props, ref: Ref<PlayerRefProps>) => {
             <Icon icon="step-forward" />
           </Button>
         </ControlWrapper>
-
-        <Button onClick={handleGetDetails}>Details</Button>
+        <ControlWrapper>
+          <Button onClick={handleDecreaseAutoscrollSpeed}>
+            <Icon icon="minus" />
+          </Button>
+          <Switch
+            label="Autoscroll"
+            onChange={handleAutoscrollChange}
+          />
+          <Button onClick={handleIncreaseAutoscrollSpeed}>
+            <Icon icon="plus" />
+          </Button>
+        </ControlWrapper>
       </DetailsWrapper>
     </PlayerWrapper>
   )
 }
 
-export const Player = forwardRef(PlayerRef)
+export const Player = forwardRef(PlayerRefComponent)

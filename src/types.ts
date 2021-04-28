@@ -1,3 +1,15 @@
+declare global {
+  interface Window {
+    find: (
+      aString: string,
+      aCaseSensitive: boolean,
+      aBackwards: boolean,
+      aWrapAround: boolean,
+      aWholeWord: boolean
+    ) => boolean
+  }
+}
+
 export type IconPaddingOptions = 'none' | 'default' | 'small'
 
 export interface NodeProps {
@@ -18,6 +30,18 @@ export interface PlayContentProps {
   actKeyframes: Keyframe[]
 }
 
-export interface PlayerRefProps {
+export interface PlayerRef {
   updatePlayer: (updateId: string) => void
+}
+
+export interface SwitchProps {
+  isChecked?: boolean
+  label?: string
+  isLabelVisible?: boolean
+  onChange?: (isChecked: boolean) => void
+}
+
+export interface User {
+  name: string
+  color: string
 }

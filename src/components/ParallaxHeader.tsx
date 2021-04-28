@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components/macro'
+import styled from 'styled-components/macro'
 import { Title } from 'components'
 
 /*
@@ -19,7 +19,6 @@ const TitleWrapper = styled.div`
 
 const ParallaxBackground = styled.img`
   width: 100%;
-  /* transform: translateY(-200px); */
 `
 
 const MenuHeaderTorn = styled.div`
