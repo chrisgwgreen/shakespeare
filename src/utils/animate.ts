@@ -1,8 +1,5 @@
 import { keyframes } from 'styled-components/macro'
 
-/*
- * Fade Animation
- */
 export const fadeInAnimation = keyframes`
   from {
     opacity: 0;
@@ -46,12 +43,9 @@ export const quillAnimation = keyframes`
 export const lineAnimation = keyframes`
   0% {
     transform: translateX(0);
-    
   }
 
-  10% {
-    
-  }
+  10% {}
 
   25% {
     transform: translateX(5px);
@@ -65,12 +59,19 @@ export const lineAnimation = keyframes`
     transform: translateX(25px);
   }
 
-  90% {
-    
-  }
+  90% {}
 
   100% {
     transform: translateX(30px);
-    
+  }
+`
+
+export const leftInAnimation = keyframes`
+  from {
+    transform: translateX(30px);
+  }
+
+  to {
+    transform: translateX(0);
   }
 `

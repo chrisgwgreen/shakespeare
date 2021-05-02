@@ -41,13 +41,14 @@ export interface SwitchProps {
   onChange?: (isChecked: boolean) => void
 }
 
-export interface User {
+export interface PersonaColor {
   name: string
   color: string
 }
 
-export interface UserContextProps {
-  users: User[]
-  setUserColor: (name: string, color: string) => void
-  getUserColor: (name: string) => string | null
+export interface PersonaeContextProps {
+  personae: PersonaColor[]
+  setPersonaColor: (name: string, color: string) => void
+  getPersonaColor: (name: string) => string | null
+  setPersonae: (personae: PersonaColor[]) => void
 }

@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components/macro'
 import { HelmetProvider } from 'react-helmet-async'
 import { Theme } from 'themes'
 import { PlayViewer, Menu } from 'components'
-import { UserProvider } from 'contexts'
+import { PersonaeProvider } from 'contexts'
 
 import './index.css'
 
@@ -13,7 +13,7 @@ ReactDOM.render(
   <StrictMode>
     <HelmetProvider>
       <ThemeProvider theme={Theme}>
-        <UserProvider>
+        <PersonaeProvider>
           <Router>
             <Switch>
               <Route path="/play/:playId/">
@@ -24,7 +24,7 @@ ReactDOM.render(
               </Route>
             </Switch>
           </Router>
-        </UserProvider>
+        </PersonaeProvider>
       </ThemeProvider>
     </HelmetProvider>
   </StrictMode>,

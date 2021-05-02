@@ -2,7 +2,6 @@ import React, {
   useState,
   useEffect,
   forwardRef,
-  useRef,
   Ref,
   useImperativeHandle
 } from 'react'
@@ -11,7 +10,7 @@ import YouTube from 'react-youtube'
 import { YouTubePlayer } from 'youtube-player/dist/types'
 import { Keyframe, PlayerRef } from 'types'
 import { stringToSeconds, findString } from 'utils'
-import { Icon, Button, Title, Switch } from 'components'
+import { Icon, Button, Title, AutoscrollControls } from 'components'
 
 interface Props {
   youtubeId: string
@@ -37,11 +36,6 @@ const PlayerWrapper = styled.div((props) => {
   `
 })
 
-const ControlWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-`
-
 const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,6 +49,11 @@ const YoutubeWrapper = styled.div`
   background: #eee;
 `
 
+const ControlWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+`
+
 /*
  * Component
  */
@@ -66,14 +65,6 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
    */
   const [player, setPlayer] = useState<YouTubePlayer>()
   const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  const [isAutoscrolling, setIsAutoscrolling] = useState<boolean>(
-    false
-  )
-  const isScrolling = useRef<boolean>(false)
-  const scrollTop = useRef<number>(0)
-  const autoScrollRate = useRef<number>(0.5)
-
-  const [currentAct, setCurrentAct] = useState<string>()
 
   useImperativeHandle(ref, () => ({
     updatePlayer: (updateId: string) => {
@@ -86,7 +77,7 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
       if (keyframe) {
         player?.seekTo(stringToSeconds(keyframe.time), true)
 
-        console.log('Update Player >', stringToSeconds(keyframe.time))
+        // console.log('Update Player >', stringToSeconds(keyframe.time))
       }
     }
   }))
@@ -94,19 +85,13 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
   /*
    * useEffect: Scroll to previous Y
    */
-  useEffect(() => {
-    if (youtubeId) {
-      const scrollY = localStorage.getItem(`${youtubeId}-s`)
+  // useEffect(() => {
+  //   if (youtubeId) {
+  //     const scrollY = localStorage.getItem(`${youtubeId}-s`)
 
-      if (scrollY) window.scrollTo(0, parseFloat(scrollY))
-    }
-  }, [youtubeId])
-
-  useEffect(() => {
-    return () => {
-      isScrolling.current = false
-    }
-  }, [])
+  //     if (scrollY) window.scrollTo(0, parseFloat(scrollY))
+  //   }
+  // }, [youtubeId])
 
   /*
    * useEffect: Save audio and page position whilst playing...
@@ -130,45 +115,32 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
   }, [isPlaying])
 
   useEffect(() => {
-    if (isPlaying) {
-      const seekTime = localStorage.getItem(`${youtubeId}-t`)
-
-      if (seekTime) player?.seekTo(parseFloat(seekTime), true)
-
-      const scrollY = localStorage.getItem(`${youtubeId}-s`)
-
-      if (scrollY) window.scrollTo(0, parseFloat(scrollY))
-    }
+    // if (isPlaying) {
+    //   const seekTime = localStorage.getItem(`${youtubeId}-t`)
+    //   if (seekTime) player?.seekTo(parseFloat(seekTime), true)
+    //   // const scrollY = localStorage.getItem(`${youtubeId}-s`)
+    //   // if (scrollY) window.scrollTo(0, parseFloat(scrollY))
+    // }
   }, [isPlaying])
 
-  useEffect(() => {
-    if (isAutoscrolling && isPlaying) {
-      const autoScroll = () => {
-        window.requestAnimationFrame(() => {
-          if (isScrolling.current) {
-            if (document.scrollingElement) {
-              scrollTop.current += autoScrollRate.current
-
-              document.scrollingElement.scrollTop = scrollTop.current
-            }
-
-            autoScroll()
-          }
-        })
-      }
-
-      autoScroll()
-    }
-  }, [isAutoscrolling, isPlaying])
-
   /*
-   * Handle Events
+   * Player Handle Events
    */
   const handleReady = (event: { target: YouTubePlayer }) => {
     const { target } = event
 
     setPlayer(target)
   }
+
+  const handlePlayerPlay = () => {
+    setIsPlaying(true)
+  }
+
+  const handlePlayerPause = () => setIsPlaying(false)
+
+  /*
+   * Handle Events
+   */
 
   const handleStepBackward = () => {
     findString('ACT I', false, false, true, true)
@@ -195,30 +167,6 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
       player?.pauseVideo()
     }
   }
-
-  const handlePlayerPlay = () => {
-    setIsPlaying(true)
-  }
-
-  const handlePlayerPause = () => setIsPlaying(false)
-
-  const handleAutoscrollChange = (isChecked: boolean) => {
-    isScrolling.current = isChecked
-    setIsAutoscrolling(isChecked) // Triggers render
-
-    if (isChecked) {
-      // Set scroll top
-      if (document.scrollingElement) {
-        scrollTop.current = document.scrollingElement.scrollTop
-      }
-    }
-  }
-
-  const handleDecreaseAutoscrollSpeed = () =>
-    (autoScrollRate.current -= 0.1)
-
-  const handleIncreaseAutoscrollSpeed = () =>
-    (autoScrollRate.current += 0.1)
 
   return (
     <PlayerWrapper>
@@ -259,18 +207,8 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
             <Icon icon="step-forward" />
           </Button>
         </ControlWrapper>
-        <ControlWrapper>
-          <Button onClick={handleDecreaseAutoscrollSpeed}>
-            <Icon icon="minus" />
-          </Button>
-          <Switch
-            label="Autoscroll"
-            onChange={handleAutoscrollChange}
-          />
-          <Button onClick={handleIncreaseAutoscrollSpeed}>
-            <Icon icon="plus" />
-          </Button>
-        </ControlWrapper>
+
+        <AutoscrollControls isPlaying={isPlaying} />
       </DetailsWrapper>
     </PlayerWrapper>
   )

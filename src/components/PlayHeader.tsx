@@ -69,7 +69,7 @@ export const PlayHeader = (props: Props) => {
     window.addEventListener('keydown', enterPress)
 
     return () => {
-      window.addEventListener('keydown', enterPress)
+      window.removeEventListener('keydown', enterPress)
     }
   }, [])
 

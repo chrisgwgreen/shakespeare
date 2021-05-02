@@ -3,8 +3,8 @@ import styled from 'styled-components/macro'
 import { SketchPicker, ColorResult } from 'react-color'
 import { Icon } from 'components'
 import { fadeInAnimation } from 'utils'
-import { UserConsumer } from 'contexts'
-import { UserContextProps } from 'types'
+import { PersonaeConsumer } from 'contexts'
+import { PersonaeContextProps } from 'types'
 
 interface Props {
   name: string
@@ -12,8 +12,8 @@ interface Props {
 
 interface PersonaProps {
   name: string
-  getUserColor: (name: string) => string | null
-  setUserColor: (name: string, color: string) => void
+  getPersonaColor: (name: string) => string | null
+  setPersonaColor: (name: string, color: string) => void
 }
 
 /*
@@ -47,8 +47,11 @@ const ButtonWrapper = styled.button`
   cursor: pointer;
 `
 
+/*
+ * Components
+ */
 const PersonaComponent = (props: PersonaProps) => {
-  const { name, getUserColor, setUserColor } = props
+  const { name, getPersonaColor, setPersonaColor } = props
 
   const [
     isColorPickerVisible,
@@ -62,13 +65,6 @@ const PersonaComponent = (props: PersonaProps) => {
   /*
    * React Hooks
    */
-
-  useEffect(() => {
-    const color = getUserColor(name)
-
-    if (color) setSketchPickerColor(color)
-  }, [])
-
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIsColorPickerVisible(false)
@@ -84,8 +80,16 @@ const PersonaComponent = (props: PersonaProps) => {
   /*
    * Event Handlers
    */
-  const handleToggleColorPicker = () =>
-    setIsColorPickerVisible(!isColorPickerVisible)
+  const handleToggleColorPicker = () => {
+    if (!isColorPickerVisible) {
+      const color = getPersonaColor(name)
+      color && setSketchPickerColor(color)
+
+      setIsColorPickerVisible(true)
+    } else {
+      setIsColorPickerVisible(false)
+    }
+  }
 
   const handleColorChange = (color: ColorResult) => {
     const { hex } = color
@@ -94,12 +98,12 @@ const PersonaComponent = (props: PersonaProps) => {
   }
 
   const handleChangeComplete = () => {
-    setUserColor(name, sketchPickerColor)
+    setPersonaColor(name, sketchPickerColor)
   }
 
   const color = isColorPickerVisible
     ? sketchPickerColor
-    : getUserColor(name)
+    : getPersonaColor(name)
 
   return (
     <PersonaWrapper>
@@ -127,30 +131,25 @@ const PersonaComponent = (props: PersonaProps) => {
   )
 }
 
-/*
- * Component
- */
 export const Persona = (props: Props) => {
   const { name } = props
 
   return (
-    <UserConsumer>
+    <PersonaeConsumer>
       {(context) => {
         const {
-          getUserColor,
-          setUserColor
-        } = context as UserContextProps
-
-        // if (!getUserColor(name)) setUserColor(name, getRandomColor())
+          getPersonaColor,
+          setPersonaColor
+        } = context as PersonaeContextProps
 
         return (
           <PersonaComponent
             name={name}
-            getUserColor={getUserColor}
-            setUserColor={setUserColor}
+            getPersonaColor={getPersonaColor}
+            setPersonaColor={setPersonaColor}
           />
         )
       }}
-    </UserConsumer>
+    </PersonaeConsumer>
   )
 }

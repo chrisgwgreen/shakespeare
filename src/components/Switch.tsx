@@ -7,9 +7,9 @@ import { SwitchProps } from 'types'
  * Styled Components
  */
 const Label = styled.span`
-  font-size: 0.75rem;
-  margin-left: 0.5rem;
+  font-size: 0.625rem;
   color: inherit;
+  text-transform: uppercase;
 `
 
 const SwitchWrapper = styled.div`

@@ -1,6 +1,6 @@
 import React from 'react'
-import { UserConsumer } from 'contexts'
-import { UserContextProps } from 'types'
+import { PersonaeConsumer } from 'contexts'
+import { PersonaeContextProps } from 'types'
 import { Title } from 'components'
 
 interface Props {
@@ -14,11 +14,11 @@ export const SpeechTitle = (props: Props) => {
   const { text } = props
 
   return (
-    <UserConsumer>
+    <PersonaeConsumer>
       {(context) => {
-        const { getUserColor } = context as UserContextProps
+        const { getPersonaColor } = context as PersonaeContextProps
 
-        const color = getUserColor(text)
+        const color = getPersonaColor(text)
 
         return (
           <Title
@@ -28,6 +28,6 @@ export const SpeechTitle = (props: Props) => {
           />
         )
       }}
-    </UserConsumer>
+    </PersonaeConsumer>
   )
 }

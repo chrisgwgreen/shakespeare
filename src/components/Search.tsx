@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components/macro'
 import { Button, Icon } from 'components'
-import { findString } from 'utils'
+import { findString, fadeInAnimation, leftInAnimation } from 'utils'
 
 /*
  * Styled Component
@@ -20,12 +20,14 @@ const SearchWrapper = styled.div((props) => {
     flex-direction: row;
     background: ${background};
     box-shadow: ${boxShadow};
+    animation: ${fadeInAnimation} forwards 0.4s,
+      ${leftInAnimation} forwards 0.4s;
   `
 })
 
 const StyledInput = styled.input((props) => {
   const {
-    theme: { headerFont, borderColor }
+    theme: { headerFont }
   } = props
 
   return css`
@@ -34,7 +36,7 @@ const StyledInput = styled.input((props) => {
     max-width: 375px;
     outline: none;
     font-family: ${headerFont};
-    border: 1px solid ${borderColor};
+    border: none;
     padding: 0.5rem;
   `
 })
