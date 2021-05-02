@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components/macro'
 import { HelmetProvider } from 'react-helmet-async'
 import { Theme } from 'themes'
 import { PlayViewer, Menu } from 'components'
+import { UserProvider } from 'contexts'
 
 import './index.css'
 
@@ -12,16 +13,18 @@ ReactDOM.render(
   <StrictMode>
     <HelmetProvider>
       <ThemeProvider theme={Theme}>
-        <Router>
-          <Switch>
-            <Route path="/play/:playId/">
-              <PlayViewer />
-            </Route>
-            <Route path="/">
-              <Menu />
-            </Route>
-          </Switch>
-        </Router>
+        <UserProvider>
+          <Router>
+            <Switch>
+              <Route path="/play/:playId/">
+                <PlayViewer />
+              </Route>
+              <Route path="/">
+                <Menu />
+              </Route>
+            </Switch>
+          </Router>
+        </UserProvider>
       </ThemeProvider>
     </HelmetProvider>
   </StrictMode>,

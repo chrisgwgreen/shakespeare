@@ -32,16 +32,35 @@ export const Play = (props: Props) => {
 
   const [users, setUsers] = useState<User[]>([])
 
+  console.log({ users })
+
   /*
    * Handle Events
    */
 
-  const handleUpdatePersona = (name: string, color: string) => {
-    const newUsers = [...users, { name, color }]
+  const handleUpdatePersona = (
+    name: string,
+    color: string,
+    isNewPersona = false
+  ) => {
+    // users.push({ name, color })
+    // setUsers(users)
 
-    setUsers(newUsers)
+    // console.log('>>', name)
 
-    console.log('>>>>', users)
+    // // console.log({ name, color })
+
+    const userIndex = users.findIndex((user) => user.name === name)
+
+    if (userIndex === -1) {
+      users.push({ name, color })
+      setUsers(users)
+    } else {
+      users[userIndex].color = color
+      setUsers(users)
+    }
+
+    // TODO write to localstorage...
   }
 
   return (
@@ -90,6 +109,7 @@ export const Play = (props: Props) => {
                   nodeName={nodeName}
                   childNodes={childNodes}
                   onUpdatePlayer={onUpdatePlayer}
+                  users={users}
                 />
               )
             default:

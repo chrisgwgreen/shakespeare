@@ -1,10 +1,11 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
-import { NodeProps } from 'types'
+import { NodeProps, User } from 'types'
 import { Title, Scene } from 'components'
 
 interface Props extends NodeProps {
   onUpdatePlayer: (updateId: string) => void
+  users: User[]
 }
 
 /*
@@ -30,7 +31,7 @@ const ActTitleWrapper = styled.div`
  * Component
  */
 export const Act = (props: Props) => {
-  const { childNodes, onUpdatePlayer } = props
+  const { childNodes, onUpdatePlayer, users } = props
 
   return (
     <ActWrapper>
@@ -61,6 +62,7 @@ export const Act = (props: Props) => {
                   key={`act-scene-${index}`}
                   nodeName={nodeName}
                   childNodes={childNodes}
+                  users={users}
                 />
               )
 

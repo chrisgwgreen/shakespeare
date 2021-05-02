@@ -1,16 +1,21 @@
 import React from 'react'
-import { NodeProps } from 'types'
+import { NodeProps, User } from 'types'
 import { Text, Persona } from 'components'
 
 interface Props extends NodeProps {
-  onUpdatePersona: (name: string, color: string) => void
+  onUpdatePersona: (
+    name: string,
+    color: string,
+    isNewPersona?: boolean
+  ) => void
+  users: User[]
 }
 
 /*
  * Component
  */
 export const PersonaGroup = (props: Props) => {
-  const { childNodes, onUpdatePersona } = props
+  const { childNodes, onUpdatePersona, users } = props
 
   return (
     <>
@@ -26,6 +31,7 @@ export const PersonaGroup = (props: Props) => {
                     key={`persona-group-${index}`}
                     name={text}
                     onUpdatePersona={onUpdatePersona}
+                    users={users}
                   />
                 )
               )

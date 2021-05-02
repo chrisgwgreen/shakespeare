@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { SketchPicker, ColorResult } from 'react-color'
 import { Icon } from 'components'
-import { getRandomColor, getSafeName, fadeInAnimation } from 'utils'
+import { getRandomColor, fadeInAnimation } from 'utils'
+import { User } from 'types'
 
 interface Props {
   name: string
-  onUpdatePersona: (name: string, color: string) => void
+  onUpdatePersona: (
+    name: string,
+    color: string,
+    isNewPersona?: boolean
+  ) => void
+  users: User[]
 }
 
 /*
@@ -44,7 +50,7 @@ const ButtonWrapper = styled.button`
  * Component
  */
 export const Persona = (props: Props) => {
-  const { name, onUpdatePersona } = props
+  const { name, onUpdatePersona, users } = props
 
   /*
    * State
@@ -59,21 +65,41 @@ export const Persona = (props: Props) => {
    * React Hooks
    */
   useEffect(() => {
-    const safeName = getSafeName(name)
-    const safeNameColor = localStorage.getItem(safeName)
+    const randomColor = getRandomColor()
 
-    if (!safeNameColor) {
-      const randomColor = getRandomColor()
+    onUpdatePersona(name, randomColor)
 
-      // TODO move this to "Play"
-      localStorage.setItem(safeName, randomColor)
+    setSafeNameColor(randomColor)
+    // const userIndex = users.findIndex((user) => user.name === name)
 
-      setSafeNameColor(randomColor)
+    // console.log('--->', { userIndex, name })
 
-      onUpdatePersona(name, randomColor)
-    } else {
-      setSafeNameColor(safeNameColor)
-    }
+    // if (userIndex === -1) {
+    //
+
+    //   onUpdatePersona(name, randomColor)
+    // } else {
+    //   console.log('XX', users[userIndex].color)
+    //   setSafeNameColor(users[userIndex].color)
+    // }
+
+    // const safeName = getSafeName(name)
+    // const safeNameColor = localStorage.getItem(safeName)
+
+    // if (!safeNameColor) {
+    //   const randomColor = getRandomColor()
+
+    //   // TODO move this to "Play"
+    //   localStorage.setItem(safeName, randomColor)
+
+    //   setSafeNameColor(randomColor)
+
+    //   onUpdatePersona(name, randomColor)
+    // } else {
+    //   setSafeNameColor(safeNameColor)
+
+    //   onUpdatePersona(name, safeNameColor)
+    // }
   }, [])
 
   useEffect(() => {
@@ -101,10 +127,6 @@ export const Persona = (props: Props) => {
   }
 
   const handleChangeComplete = () => {
-    const safeName = getSafeName(name)
-
-    safeNameColor && localStorage.setItem(safeName, safeNameColor)
-
     safeNameColor && onUpdatePersona(name, safeNameColor)
   }
 

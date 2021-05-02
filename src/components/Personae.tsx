@@ -4,7 +4,11 @@ import { NodeProps, User } from 'types'
 import { Text, Persona, PersonaGroup, Accordion } from 'components'
 
 interface Props extends NodeProps {
-  onUpdatePersona: (name: string, color: string) => void
+  onUpdatePersona: (
+    name: string,
+    color: string,
+    isNewPersona?: boolean
+  ) => void
   users: User[]
 }
 
@@ -17,7 +21,7 @@ const PersonaeContent = styled.div``
  * Component
  */
 export const Personae = (props: Props) => {
-  const { onUpdatePersona, childNodes } = props
+  const { onUpdatePersona, childNodes, users } = props
 
   const personaeContent =
     childNodes &&
@@ -32,6 +36,7 @@ export const Personae = (props: Props) => {
                 key={`persona-${index}`}
                 name={text}
                 onUpdatePersona={onUpdatePersona}
+                users={users}
               />
             )
           )
@@ -50,6 +55,7 @@ export const Personae = (props: Props) => {
               nodeName={nodeName}
               childNodes={childNodes}
               onUpdatePersona={onUpdatePersona}
+              users={users}
             />
           )
 
