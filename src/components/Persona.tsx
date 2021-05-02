@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { SketchPicker, ColorResult } from 'react-color'
 import { Icon } from 'components'
-import { getRandomColor, fadeInAnimation } from 'utils'
-import { User } from 'types'
+import { fadeInAnimation } from 'utils'
+import { UserConsumer } from 'contexts'
+import { UserContextProps } from 'types'
 
 interface Props {
   name: string
-  onUpdatePersona: (
-    name: string,
-    color: string,
-    isNewPersona?: boolean
-  ) => void
-  users: User[]
+}
+
+interface PersonaProps {
+  name: string
+  getUserColor: (name: string) => string | null
+  setUserColor: (name: string, color: string) => void
 }
 
 /*
@@ -46,60 +47,26 @@ const ButtonWrapper = styled.button`
   cursor: pointer;
 `
 
-/*
- * Component
- */
-export const Persona = (props: Props) => {
-  const { name, onUpdatePersona, users } = props
+const PersonaComponent = (props: PersonaProps) => {
+  const { name, getUserColor, setUserColor } = props
 
-  /*
-   * State
-   */
-  const [safeNameColor, setSafeNameColor] = useState<string>()
   const [
     isColorPickerVisible,
     setIsColorPickerVisible
   ] = useState<boolean>()
 
+  const [sketchPickerColor, setSketchPickerColor] = useState<string>(
+    ''
+  )
+
   /*
    * React Hooks
    */
+
   useEffect(() => {
-    const randomColor = getRandomColor()
+    const color = getUserColor(name)
 
-    onUpdatePersona(name, randomColor)
-
-    setSafeNameColor(randomColor)
-    // const userIndex = users.findIndex((user) => user.name === name)
-
-    // console.log('--->', { userIndex, name })
-
-    // if (userIndex === -1) {
-    //
-
-    //   onUpdatePersona(name, randomColor)
-    // } else {
-    //   console.log('XX', users[userIndex].color)
-    //   setSafeNameColor(users[userIndex].color)
-    // }
-
-    // const safeName = getSafeName(name)
-    // const safeNameColor = localStorage.getItem(safeName)
-
-    // if (!safeNameColor) {
-    //   const randomColor = getRandomColor()
-
-    //   // TODO move this to "Play"
-    //   localStorage.setItem(safeName, randomColor)
-
-    //   setSafeNameColor(randomColor)
-
-    //   onUpdatePersona(name, randomColor)
-    // } else {
-    //   setSafeNameColor(safeNameColor)
-
-    //   onUpdatePersona(name, safeNameColor)
-    // }
+    if (color) setSketchPickerColor(color)
   }, [])
 
   useEffect(() => {
@@ -123,21 +90,23 @@ export const Persona = (props: Props) => {
   const handleColorChange = (color: ColorResult) => {
     const { hex } = color
 
-    setSafeNameColor(hex)
+    setSketchPickerColor(hex)
   }
 
   const handleChangeComplete = () => {
-    safeNameColor && onUpdatePersona(name, safeNameColor)
+    setUserColor(name, sketchPickerColor)
   }
 
-  const style = {
-    color: safeNameColor
-  }
+  const color = isColorPickerVisible
+    ? sketchPickerColor
+    : getUserColor(name)
 
   return (
     <PersonaWrapper>
       <PersonaTitleWrapper
-        style={style}
+        style={{
+          color: color || `#000`
+        }}
         onClick={handleToggleColorPicker}
       >
         {name}
@@ -148,12 +117,40 @@ export const Persona = (props: Props) => {
             <Icon icon="times" />
           </ButtonWrapper>
           <SketchPicker
-            color={safeNameColor}
+            color={sketchPickerColor}
             onChange={handleColorChange}
             onChangeComplete={handleChangeComplete}
           />
         </SketchPickerWrapper>
       )}
     </PersonaWrapper>
+  )
+}
+
+/*
+ * Component
+ */
+export const Persona = (props: Props) => {
+  const { name } = props
+
+  return (
+    <UserConsumer>
+      {(context) => {
+        const {
+          getUserColor,
+          setUserColor
+        } = context as UserContextProps
+
+        // if (!getUserColor(name)) setUserColor(name, getRandomColor())
+
+        return (
+          <PersonaComponent
+            name={name}
+            getUserColor={getUserColor}
+            setUserColor={setUserColor}
+          />
+        )
+      }}
+    </UserConsumer>
   )
 }

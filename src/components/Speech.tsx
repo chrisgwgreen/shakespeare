@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { NodeProps } from 'types'
-import { Text, Title } from 'components'
-import { getSafeName } from 'utils'
+import { Text, Title, SpeechTitle } from 'components'
 
 /*
  * Styled Components
@@ -22,8 +21,6 @@ const StageDirWrapper = styled.div`
 export const Speech = (props: NodeProps) => {
   const { childNodes } = props
 
-  const [safeNameColor, setSafeNameColor] = useState<string>('#000')
-
   return (
     <SpeechWrapper>
       {childNodes &&
@@ -32,22 +29,11 @@ export const Speech = (props: NodeProps) => {
 
           switch (nodeName) {
             case 'speaker':
-              useEffect(() => {
-                if (text) {
-                  const safeName = getSafeName(text)
-                  const safeNameColor = localStorage.getItem(safeName)
-
-                  safeNameColor && setSafeNameColor(safeNameColor)
-                }
-              }, [])
-
               return (
                 text && (
-                  <Title
-                    key={`speech-speaker-${index}`}
+                  <SpeechTitle
+                    key={`scene-title-${index}`}
                     text={text}
-                    color={safeNameColor}
-                    size="small"
                   />
                 )
               )

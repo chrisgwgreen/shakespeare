@@ -1,16 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { NodeProps, User } from 'types'
+import { NodeProps } from 'types'
 import { Text, Persona, PersonaGroup, Accordion } from 'components'
-
-interface Props extends NodeProps {
-  onUpdatePersona: (
-    name: string,
-    color: string,
-    isNewPersona?: boolean
-  ) => void
-  users: User[]
-}
 
 /*
  * Styled Components
@@ -20,8 +11,8 @@ const PersonaeContent = styled.div``
 /*
  * Component
  */
-export const Personae = (props: Props) => {
-  const { onUpdatePersona, childNodes, users } = props
+export const Personae = (props: NodeProps) => {
+  const { childNodes } = props
 
   const personaeContent =
     childNodes &&
@@ -31,14 +22,7 @@ export const Personae = (props: Props) => {
       switch (nodeName) {
         case 'persona':
           return (
-            text && (
-              <Persona
-                key={`persona-${index}`}
-                name={text}
-                onUpdatePersona={onUpdatePersona}
-                users={users}
-              />
-            )
+            text && <Persona key={`persona-${index}`} name={text} />
           )
 
         case 'grpdescr':
@@ -54,8 +38,6 @@ export const Personae = (props: Props) => {
               key={`persona-group-${index}`}
               nodeName={nodeName}
               childNodes={childNodes}
-              onUpdatePersona={onUpdatePersona}
-              users={users}
             />
           )
 

@@ -1,11 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { NodeProps, User } from 'types'
+import { NodeProps } from 'types'
 import { Speech, Title } from 'components'
-
-interface Props extends NodeProps {
-  users: User[]
-}
 
 /*
  * Styled Components
@@ -21,8 +17,8 @@ const StageDirWrapper = styled.div`
 /*
  * Component
  */
-export const Scene = (props: Props) => {
-  const { childNodes, users } = props
+export const Scene = (props: NodeProps) => {
+  const { childNodes } = props
 
   return (
     <SceneWrapper>

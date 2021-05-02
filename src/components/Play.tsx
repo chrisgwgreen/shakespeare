@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components/macro'
 import { Helmet } from 'react-helmet-async'
-import { NodeProps, User } from 'types'
+import { NodeProps } from 'types'
 import { Personae, Title, Act, PlayHeader } from 'components'
 
 interface Props extends NodeProps {
@@ -30,39 +30,6 @@ const ScndescrWrapper = styled.div`
 export const Play = (props: Props) => {
   const { childNodes, onUpdatePlayer } = props
 
-  const [users, setUsers] = useState<User[]>([])
-
-  console.log({ users })
-
-  /*
-   * Handle Events
-   */
-
-  const handleUpdatePersona = (
-    name: string,
-    color: string,
-    isNewPersona = false
-  ) => {
-    // users.push({ name, color })
-    // setUsers(users)
-
-    // console.log('>>', name)
-
-    // // console.log({ name, color })
-
-    const userIndex = users.findIndex((user) => user.name === name)
-
-    if (userIndex === -1) {
-      users.push({ name, color })
-      setUsers(users)
-    } else {
-      users[userIndex].color = color
-      setUsers(users)
-    }
-
-    // TODO write to localstorage...
-  }
-
   return (
     <PlayWrapper>
       {childNodes &&
@@ -88,8 +55,6 @@ export const Play = (props: Props) => {
                   key={`play-personae-${index}`}
                   nodeName={nodeName}
                   childNodes={childNodes}
-                  onUpdatePersona={handleUpdatePersona}
-                  users={users}
                 />
               )
 
@@ -109,7 +74,6 @@ export const Play = (props: Props) => {
                   nodeName={nodeName}
                   childNodes={childNodes}
                   onUpdatePlayer={onUpdatePlayer}
-                  users={users}
                 />
               )
             default:

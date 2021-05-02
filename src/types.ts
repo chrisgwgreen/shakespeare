@@ -49,5 +49,5 @@ export interface User {
 export interface UserContextProps {
   users: User[]
   setUserColor: (name: string, color: string) => void
-  getUserColor: (name: string) => string
+  getUserColor: (name: string) => string | null
 }
