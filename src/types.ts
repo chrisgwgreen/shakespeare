@@ -48,7 +48,9 @@ export interface PersonaColor {
 
 export interface PersonaeContextProps {
   personae: PersonaColor[]
+  setPlayId: (playId: string) => void
+  setPersonae: (personae: PersonaColor[]) => void
   setPersonaColor: (name: string, color: string) => void
   getPersonaColor: (name: string) => string | null
-  setPersonae: (personae: PersonaColor[]) => void
+  getIsPersonaeLoaded: () => boolean
 }

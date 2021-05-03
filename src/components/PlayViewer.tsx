@@ -1,9 +1,15 @@
-import React, { useEffect, useState, createRef } from 'react'
+import React, {
+  useEffect,
+  useState,
+  createRef,
+  useContext
+} from 'react'
 import styled from 'styled-components/macro'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { NodeProps, PlayContentProps, PlayerRef } from 'types'
 import { Play, Player, Loading } from 'components'
+import { PersonaeContext } from 'contexts'
 import { xmlParser } from 'utils'
 
 interface Props {
@@ -37,6 +43,12 @@ const BackgroundImage = styled.div`
  */
 export const PlayViewer = () => {
   const { playId } = useParams<Props>()
+
+  const personaeContext = useContext(PersonaeContext)
+
+  useEffect(() => {
+    personaeContext?.setPlayId(playId)
+  }, [])
 
   /*
    * State/Ref

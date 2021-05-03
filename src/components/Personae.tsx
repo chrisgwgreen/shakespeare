@@ -19,33 +19,37 @@ export const Personae = (props: NodeProps) => {
   const personaeContext = useContext(PersonaeContext)
 
   useEffect(() => {
-    // Populate Personae context...
-    const getPersonae = (childNodes: NodeProps[]): PersonaColor[] => {
-      return childNodes?.reduce(
-        (acc: PersonaColor[], node: NodeProps) => {
-          const { nodeName, text, childNodes } = node
+    if (!personaeContext?.getIsPersonaeLoaded()) {
+      // Populate Personae context...
+      const getPersonae = (
+        childNodes: NodeProps[]
+      ): PersonaColor[] => {
+        return childNodes?.reduce(
+          (acc: PersonaColor[], node: NodeProps) => {
+            const { nodeName, text, childNodes } = node
 
-          if (nodeName === 'persona' && text)
-            return [
-              ...acc,
-              {
-                name: text,
-                color: getRandomColor()
-              }
-            ]
+            if (nodeName === 'persona' && text)
+              return [
+                ...acc,
+                {
+                  name: text,
+                  color: getRandomColor()
+                }
+              ]
 
-          if (nodeName === 'pgroup' && childNodes)
-            return [...acc, ...getPersonae(childNodes)]
+            if (nodeName === 'pgroup' && childNodes)
+              return [...acc, ...getPersonae(childNodes)]
 
-          return acc
-        },
-        []
-      )
-    }
+            return acc
+          },
+          []
+        )
+      }
 
-    if (childNodes) {
-      const personaeReduce = getPersonae(childNodes)
-      personaeContext?.setPersonae(personaeReduce)
+      if (childNodes) {
+        const personaeReduce = getPersonae(childNodes)
+        personaeContext?.setPersonae(personaeReduce)
+      }
     }
   }, [])
 
