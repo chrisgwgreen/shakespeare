@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/shakespeare/static/css/main.d96f75a9.chunk.css",
-    "main.js": "/shakespeare/static/js/main.7ab781dc.chunk.js",
-    "main.js.map": "/shakespeare/static/js/main.7ab781dc.chunk.js.map",
+    "main.js": "/shakespeare/static/js/main.6aae90cc.chunk.js",
+    "main.js.map": "/shakespeare/static/js/main.6aae90cc.chunk.js.map",
     "runtime-main.js": "/shakespeare/static/js/runtime-main.af50b713.js",
     "runtime-main.js.map": "/shakespeare/static/js/runtime-main.af50b713.js.map",
-    "static/js/2.3863450d.chunk.js": "/shakespeare/static/js/2.3863450d.chunk.js",
-    "static/js/2.3863450d.chunk.js.map": "/shakespeare/static/js/2.3863450d.chunk.js.map",
+    "static/js/2.1f1b1f86.chunk.js": "/shakespeare/static/js/2.1f1b1f86.chunk.js",
+    "static/js/2.1f1b1f86.chunk.js.map": "/shakespeare/static/js/2.1f1b1f86.chunk.js.map",
     "index.html": "/shakespeare/index.html",
     "static/css/main.d96f75a9.chunk.css.map": "/shakespeare/static/css/main.d96f75a9.chunk.css.map",
-    "static/js/2.3863450d.chunk.js.LICENSE.txt": "/shakespeare/static/js/2.3863450d.chunk.js.LICENSE.txt"
+    "static/js/2.1f1b1f86.chunk.js.LICENSE.txt": "/shakespeare/static/js/2.1f1b1f86.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.af50b713.js",
-    "static/js/2.3863450d.chunk.js",
+    "static/js/2.1f1b1f86.chunk.js",
     "static/css/main.d96f75a9.chunk.css",
-    "static/js/main.7ab781dc.chunk.js"
+    "static/js/main.6aae90cc.chunk.js"
   ]
 }

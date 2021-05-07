@@ -1,0 +1,13 @@
+{
+  "xml": "win-tale",
+  "actKeyframes": [
+    { "title": "Dramatis Personae", "time": "00:00:00" },
+    { "title": "act i", "time": "00:03:06​" },
+    { "title": "act ii", "time": "00:35:23" },
+    { "title": "act iii", "time": "01:04:18" },
+    { "title": "act iv", "time": "01:29:13​" },
+    { "title": "act v", "time": "02:35:15​" }
+  ],
+  "title": "The Winter's Tale",
+  "youtube": "yXzLFxFnB38"
+}
