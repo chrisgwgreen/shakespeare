@@ -115,12 +115,12 @@ const PlayerRefComponent = (props: Props, ref: Ref<PlayerRef>) => {
   }, [isPlaying])
 
   useEffect(() => {
-    // if (isPlaying) {
-    //   const seekTime = localStorage.getItem(`${youtubeId}-t`)
-    //   if (seekTime) player?.seekTo(parseFloat(seekTime), true)
-    //   // const scrollY = localStorage.getItem(`${youtubeId}-s`)
-    //   // if (scrollY) window.scrollTo(0, parseFloat(scrollY))
-    // }
+    if (isPlaying) {
+      const seekTime = localStorage.getItem(`${youtubeId}-t`)
+      if (seekTime) player?.seekTo(parseFloat(seekTime), true)
+      //   // const scrollY = localStorage.getItem(`${youtubeId}-s`)
+      //   // if (scrollY) window.scrollTo(0, parseFloat(scrollY))
+    }
   }, [isPlaying])
 
   /*
